@@ -14,12 +14,15 @@ public class User extends BaseEntity {
     @Column(name = "USER_ID", nullable = false, updatable = false)
     private Long id;
 
+    @NotNull(message = "L'adresse courriel ne peut être vide.")
     @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-            message="Adresse courriel invalide. Elle doit faire au maximum 64 caractères.")
+            message = "L'adresse courriel est invalide.")
+    @UniqueEmail(message = "L'adresse courriel est déjà dans notre système.")
     @Column(name = "EMAIL", nullable = false, unique = true, updatable = false, length = 64)
     private String email;
 
-    @Size(min=8, max=32, message="Le mot de passe doit être entre 8 et 32 caractères.")
+    @NotNull(message = "Le mot de passe ne peut être vide.")
+    @Size(min = 8, max = 32, message = "Le mot de passe doit contenir entre 8 et 32 caractères.")
     @Column(name = "PASSWORD", nullable = false, length = 32)
     private String password;
 
@@ -70,4 +73,5 @@ public class User extends BaseEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
