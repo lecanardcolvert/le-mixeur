@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Transactional
-public class UserRepositoryTests {
+public class UserRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
