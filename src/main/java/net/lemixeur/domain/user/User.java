@@ -22,8 +22,8 @@ public class User extends BaseEntity {
     private String email;
 
     @NotNull(message = "Le mot de passe ne peut être vide.")
-    @Size(min = 8, max = 32, message = "Le mot de passe doit contenir entre 8 et 32 caractères.")
-    @Column(name = "PASSWORD", nullable = false, length = 32)
+    @Size(min = 8, max = 60, message = "Le mot de passe doit contenir entre 8 et 60 caractères.")
+    @Column(name = "PASSWORD", nullable = false, length = 60)
     private String password;
 
     @Override

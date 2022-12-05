@@ -5,6 +5,7 @@ import net.lemixeur.domain.user.UserNotFoundProblem;
 import net.lemixeur.repository.UserRepository;
 import net.lemixeur.util.ViolationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zalando.problem.violations.Violation;
 
@@ -20,10 +21,12 @@ public class UserService {
     @Autowired
     private Validator validator;
 
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Basic CRUD methods
@@ -55,6 +58,7 @@ public class UserService {
         List<Violation> violations = ViolationUtil.convertSetConstraintViolationToListViolation(constraintViolations);
 
         if (violations.isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             newUser = userRepository.save(user);
         } else {
             throw new UserInvalidProblem(violations);

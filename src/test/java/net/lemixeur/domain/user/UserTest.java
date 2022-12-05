@@ -83,20 +83,21 @@ public class UserTest {
 
         assertEquals(1, constraintViolations.size());
         assertEquals("password", violation.getPropertyPath().toString());
-        assertEquals("Le mot de passe doit contenir entre 8 et 32 caractères.", violation.getMessage());
+        assertEquals("Le mot de passe doit contenir entre 8 et 60 caractères.", violation.getMessage());
     }
 
     @Test
     public void shouldNotValidatePasswordTooLong() {
-        // Length 33
-        User user = new User("email@provider.com", "0123456789012345678901234567890123");
+        // Length 63
+        User user = new User("email@provider.com", "0123456789012345678901234567890" +
+                "123456789012345678901234567890123");
 
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
         ConstraintViolation<User> violation = constraintViolations.iterator().next();
 
         assertEquals(1, constraintViolations.size());
         assertEquals("password", violation.getPropertyPath().toString());
-        assertEquals("Le mot de passe doit contenir entre 8 et 32 caractères.", violation.getMessage());
+        assertEquals("Le mot de passe doit contenir entre 8 et 60 caractères.", violation.getMessage());
     }
 
     @Test
